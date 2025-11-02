@@ -1,1 +1,483 @@
-# zj.github.io
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>祝张婧生日快乐</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "楷体", "Microsoft YaHei", sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            color: white;
+        }
+        
+        /* 启动页面样式 */
+        #start-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.5s;
+        }
+        
+        .start-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #FF69B4;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
+        }
+        
+        #start-btn {
+            background: linear-gradient(45deg, #FF69B4, #FF1493);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+        
+        #start-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6);
+        }
+        
+        /* 主容器样式 */
+        .container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+        
+        /* 标题样式 */
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #FF69B4;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
+            z-index: 10;
+        }
+        
+        /* 渐显图片样式 */
+        #gradual-image {
+            position: absolute;
+            max-width: 80%;
+            max-height: 40%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
+            opacity: 0;
+            transition: opacity 15s ease-in;
+            z-index: 8;
+            top: 50px;
+            border: 3px solid rgba(255, 105, 180, 0.5);
+        }
+        
+        /* 蛋糕容器样式 */
+        #cake-container {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            margin-bottom: 50px;
+            z-index: 5;
+        }
+        
+        /* 四层蛋糕样式 */
+        .cake-layer {
+            position: absolute;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .layer-1 {
+            width: 240px;
+            height: 60px;
+            background: linear-gradient(to bottom, #FFD700, #FFA500);
+            bottom: 90px;
+            left: 30px;
+            z-index: 1;
+        }
+        
+        .layer-2 {
+            width: 200px;
+            height: 50px;
+            background: linear-gradient(to bottom, #20B2AA, #008B8B);
+            bottom: 140px;
+            left: 50px;
+            z-index: 2;
+        }
+        
+        .layer-3 {
+            width: 160px;
+            height: 40px;
+            background: linear-gradient(to bottom, #9370DB, #8A2BE2);
+            bottom: 180px;
+            left: 70px;
+            z-index: 3;
+        }
+        
+        .layer-4 {
+            width: 120px;
+            height: 30px;
+            background: linear-gradient(to bottom, #FF69B4, #FF1493);
+            bottom: 210px;
+            left: 90px;
+            z-index: 4;
+        }
+        
+        /* 蜡烛样式 */
+        .candle {
+            position: absolute;
+            width: 8px;
+            height: 60px;
+            background: white;
+            border-radius: 4px 4px 0 0;
+            z-index: 6;
+            bottom: 210px;
+            left: 146px;
+        }
+        
+        .flame {
+            position: absolute;
+            width: 12px;
+            height: 20px;
+            background: radial-gradient(circle at center, #FFD700 0%, #FF4500 100%);
+            border-radius: 50% 50% 20% 20%;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: flicker 1.5s infinite alternate;
+            box-shadow: 0 0 10px #FFD700;
+            z-index: 7;
+        }
+        
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+            100% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+        }
+        
+        /* 祝福语样式 */
+        .blessing {
+            position: absolute;
+            padding: 12px 18px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            z-index: 4;
+            max-width: 200px;
+            text-align: center;
+            opacity: 0;
+            animation: appearStayDisappear 8s ease-out forwards;
+            word-wrap: break-word;
+            transform: scale(0);
+            pointer-events: none;
+        }
+        
+        @keyframes appearStayDisappear {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            15% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            70% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+        }
+        
+        /* 音乐控制 */
+        #musicControl {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255,182,193,0.8);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #FF69B4;
+            border: 2px solid #FF69B4;
+            transition: all 0.3s ease;
+        }
+        
+        #musicControl:hover {
+            background: #FF69B4;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 24px;
+            }
+            
+            #cake-container {
+                width: 250px;
+                height: 350px;
+            }
+            
+            .layer-1 {
+                width: 200px;
+                height: 50px;
+                left: 25px;
+            }
+            
+            .layer-2 {
+                width: 160px;
+                height: 40px;
+                left: 45px;
+            }
+            
+            .layer-3 {
+                width: 120px;
+                height: 30px;
+                left: 65px;
+            }
+            
+            .layer-4 {
+                width: 80px;
+                height: 20px;
+                left: 85px;
+            }
+            
+            .candle {
+                height: 50px;
+                bottom: 170px;
+                left: 120px;
+            }
+            
+            .blessing {
+                font-size: 18px;
+                max-width: 160px;
+            }
+            
+            #gradual-image {
+                max-height: 30%;
+                top: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 启动页面 -->
+    <div id="start-page">
+        <div class="start-title">祝张婧！！生日快乐！！</div>
+        <button id="start-btn">开始</button>
+    </div>
+    
+    <!-- 主容器 -->
+    <div class="container">
+        <div class="title">生日快乐！</div>
+        
+        <!-- 渐显图片 - 使用你提供的图片 -->
+        <img id="gradual-image" src="https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/6eebb657b8384bd2bff7fb8ec8532b77.jpg~tplv-a9rns2rl98-24:720:720.image?rcl=202511021701505467CC7C7F1A34DBA019&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762678910&x-signature=ffkbGr%2FIS6PzH%2F4tD0Ma%2BgSPi7Y%3D" alt="合影照片">
+        
+        <!-- 蛋糕容器 -->
+        <div id="cake-container">
+            <!-- 四层蛋糕 -->
+            <div class="cake-layer layer-1"></div>
+            <div class="cake-layer layer-2"></div>
+            <div class="cake-layer layer-3"></div>
+            <div class="cake-layer layer-4"></div>
+            
+            <!-- 蜡烛 -->
+            <div class="candle">
+                <div class="flame"></div>
+            </div>
+        </div>
+        
+        <!-- 祝福语容器 -->
+        <div id="blessings-container"></div>
+        
+        <!-- 音乐控制 -->
+        <div id="musicControl">♪</div>
+    </div>
+
+    <!-- 背景音乐 -->
+    <audio id="birthdayBGM" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-in-hawaii-80.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 祝福语列表
+        const blessings = [
+            "生日快乐", "梦想成真", "保持好心情", "多注意休息", "顺顺利利",
+            "天冷注意加衣", "每天好睡眠", "学习进步", "身体健康", "万事如意",
+            "笑口常开", "越来越漂亮可爱", "幸福美满", "平安喜乐", "心想事成",
+            "天天开心",  "送你一块大蛋糕,祝福短信随声到", "左写福如东海水,右写寿比南山松",
+            "幸福常伴你左右,快乐一生永相随",  "送你一块爱心蛋糕:底层送一生平安",
+            "中间放无限祝福,四周注满富贵吉祥", "上面铺满开心快乐,再加上幸福美满"
+        ];
+        
+        // 祝福语颜色列表
+        const blessingColors = [
+            "#FFB6C1", "#87CEFA", "#98FB98", "#FFFACD",
+            "#E6E6FA", "#FFDAB9", "#B0E0E6", "#FFA07A",
+            "#D8BFD8", "#B0E0E6", "#F0E68C", "#FFD700"
+        ];
+        
+        // 初始化函数
+        function init() {
+            const startBtn = document.getElementById('start-btn');
+            const startPage = document.getElementById('start-page');
+            const container = document.querySelector('.container');
+            const musicControl = document.getElementById('musicControl');
+            const bgm = document.getElementById('birthdayBGM');
+            const gradualImage = document.getElementById('gradual-image');
+            
+            // 开始按钮点击事件
+            startBtn.addEventListener('click', function() {
+                startPage.style.opacity = '0';
+                
+                setTimeout(() => {
+                    startPage.style.display = 'none';
+                    container.style.display = 'flex';
+                    
+                    // 开始图片15秒渐显效果
+                    setTimeout(() => {
+                        gradualImage.style.opacity = '1';
+                    }, 100);
+                    
+                    startBlessingAnimation();
+                    playBackgroundMusic();
+                }, 500);
+            });
+            
+            // 音乐控制
+            musicControl.addEventListener('click', function() {
+                if (bgm.paused) {
+                    bgm.play();
+                    musicControl.textContent = '♪';
+                } else {
+                    bgm.pause();
+                    musicControl.textContent = '🔇';
+                }
+            });
+        }
+        
+        // 播放背景音乐
+        function playBackgroundMusic() {
+            const bgm = document.getElementById('birthdayBGM');
+            const playPromise = bgm.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("自动播放被阻止，需要用户交互");
+                });
+            }
+        }
+        
+        // 开始祝福语动画
+        function startBlessingAnimation() {
+            setInterval(createBlessing, 400);
+            
+            // 初始生成几个祝福语
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    createBlessing();
+                }, i * 200);
+            }
+        }
+        
+        // 创建祝福语
+        function createBlessing() {
+            const blessingsContainer = document.getElementById('blessings-container');
+            const cakeContainer = document.getElementById('cake-container');
+            
+            // 随机选择祝福语和颜色
+            const blessingText = blessings[Math.floor(Math.random() * blessings.length)];
+            const blessingColor = blessingColors[Math.floor(Math.random() * blessingColors.length)];
+            
+            // 创建祝福语元素
+            const blessingElement = document.createElement('div');
+            blessingElement.className = 'blessing';
+            blessingElement.textContent = blessingText;
+            blessingElement.style.backgroundColor = blessingColor;
+            
+            // 获取蛋糕位置信息
+            const cakeRect = cakeContainer.getBoundingClientRect();
+            const cakeCenterX = cakeRect.left + cakeRect.width / 2;
+            const cakeCenterY = cakeRect.top + cakeRect.height / 2;
+            const cakeRadius = Math.max(cakeRect.width, cakeRect.height) / 2;
+            
+            // 在蛋糕周边随机位置出现
+            const angle = Math.random() * Math.PI * 2;
+            const distance = cakeRadius + 50 + Math.random() * 100;
+            
+            const startX = cakeCenterX + Math.cos(angle) * distance;
+            const startY = cakeCenterY + Math.sin(angle) * distance;
+            
+            // 设置祝福语初始位置
+            blessingElement.style.left = `${startX}px`;
+            blessingElement.style.top = `${startY}px`;
+            
+            // 添加到容器
+            blessingsContainer.appendChild(blessingElement);
+            
+            // 动画结束后移除元素
+            setTimeout(() => {
+                if (blessingElement.parentNode) {
+                    blessingElement.parentNode.removeChild(blessingElement);
+                }
+            }, 8000);
+            
+            // 控制祝福语数量
+            setTimeout(() => {
+                const blessings = blessingsContainer.querySelectorAll('.blessing');
+                if (blessings.length > 25) {
+                    blessings[0].remove();
+                }
+            }, 10000);
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
